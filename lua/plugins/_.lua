@@ -4,16 +4,37 @@ require('Comment').setup()
 -- Enable Comment.nvim
 require('tmux').setup {
   resize = {
-        -- enables default keybindings (A-hjkl) for normal mode
-        enable_default_keybindings = false
+    -- enables default keybindings (A-hjkl) for normal mode
+    enable_default_keybindings = false
   }
 }
 
 -- Enable `lukas-reineke/indent-blankline.nvim`
 -- See `:help indent_blankline.txt`
 require('indent_blankline').setup {
-  char = '┊',
+  char = "▏",
+  use_treesitter = true,
+  show_first_indent_level = true,
   show_trailing_blankline_indent = false,
+  filetype_exclude = {
+    'lspinfo',
+    'packer',
+    'checkhealth',
+    'help',
+    'man',
+    'dashboard',
+    'git',
+    'markdown',
+    'text',
+    'terminal',
+    'NvimTree',
+  },
+  buftype_exclude = {
+    'terminal',
+    'nofile',
+    'quickfix',
+    'prompt',
+  },
 }
 
 -- Gitsigns

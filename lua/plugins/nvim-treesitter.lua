@@ -10,6 +10,9 @@ end
 treesitter.setup {
   -- Add languages to be installed here that you want installed for treesitter
   ensure_installed = { 'comment', 'c', 'awk', 'lua', 'python', 'rust', 'eex', 'elixir', 'erlang', 'css', 'html', 'javascript', 'typescript', 'json', 'yaml', 'help' },
+  ignore_install = { "help" },
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
 
   highlight = { enable = true },
   indent = { enable = true, disable = { 'python' } },
