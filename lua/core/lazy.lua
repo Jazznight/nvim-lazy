@@ -26,8 +26,7 @@ vim.opt.rtp:prepend(lazypath)
 -- Use a protected call so we don't error out on first use
 local status_ok, lazy = pcall(require, 'lazy')
 if not status_ok then
-  print("NOOOOOOOOOOOOOOKK")
-  require('lazy').setup()
+  print("Lazy loading error.........")
   return
 end
 
@@ -115,6 +114,11 @@ lazy.setup({
     },
 
     -- LSP
+    {
+      "williamboman/mason.nvim",
+      build = ":MasonUpdate" -- :MasonUpdate updates registry contents
+    },
+    { 'williamboman/mason-lspconfig.nvim' },
     {
       'neovim/nvim-lspconfig',
       dependencies = {

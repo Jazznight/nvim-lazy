@@ -52,8 +52,10 @@ local servers = {
   -- clangd = {},
   -- gopls = {},
   -- pyright = {},
-  -- rust_analyzer = {},
-  -- tsserver = {},
+  rust_analyzer = {},
+  elixir_ls = {},
+  jedi_language_server = {},
+  tsserver = {},
 
   lua_ls = {
     Lua = {
