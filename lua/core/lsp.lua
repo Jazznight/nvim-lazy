@@ -53,7 +53,7 @@ local servers = {
   -- gopls = {},
   -- pyright = {},
   rust_analyzer = {},
-  elixir_ls = {},
+  elixirls = {},
   jedi_language_server = {},
   tsserver = {},
 

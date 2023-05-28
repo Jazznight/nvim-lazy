@@ -10,6 +10,37 @@ if not luasnip_status_ok then
   return
 end
 
+local lspkind_status_ok, lspkind = pcall(require, "lspkind")
+if not lspkind_status_ok then
+  return
+end
+
+local border_opts = {
+  border = "single",
+  winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
+}
+local lspkind_mode = {
+  mode = "symbol",
+  symbol_map = {
+    Array = "󰅪",
+    Boolean = "⊨",
+    Class = "󰌗",
+    Constructor = "",
+    Key = "󰌆",
+    Namespace = "󰅪",
+    Null = "NULL",
+    Number = "#",
+    Object = "󰀚",
+    Package = "󰏗",
+    Property = "",
+    Reference = "",
+    Snippet = "",
+    String = "󰀬",
+    TypeParameter = "󰊄",
+    Unit = "",
+  }
+}
+
 cmp.setup {
   snippet = {
     expand = function(args)
@@ -19,6 +50,14 @@ cmp.setup {
   completion = {
     --completeopt = 'menu,menuone,noselect'
     keyword_length = 2
+  },
+  window = {
+    completion = cmp.config.window.bordered(border_opts),
+    documentation = cmp.config.window.bordered(border_opts),
+  },
+  formatting = {
+    fields = { "kind", "abbr", "menu" },
+    format = lspkind_status_ok and lspkind.cmp_format(lspkind_mode) or nil,
   },
   mapping = {
     ['<C-n>'] = cmp.mapping.select_next_item(),

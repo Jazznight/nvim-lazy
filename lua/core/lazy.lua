@@ -114,11 +114,11 @@ lazy.setup({
     },
 
     -- LSP
-    {
-      "williamboman/mason.nvim",
-      build = ":MasonUpdate" -- :MasonUpdate updates registry contents
-    },
-    { 'williamboman/mason-lspconfig.nvim' },
+    -- {
+    --   "williamboman/mason.nvim",
+    --   build = ":MasonUpdate" -- :MasonUpdate updates registry contents
+    -- },
+    -- { 'williamboman/mason-lspconfig.nvim' },
     {
       'neovim/nvim-lspconfig',
       dependencies = {
@@ -142,6 +142,9 @@ lazy.setup({
       -- these dependencies will only be loaded when cmp loads
       -- dependencies are always lazy-loaded unless specified otherwise
       dependencies = {
+        -- For styling
+        'onsails/lspkind.nvim',
+
         -- Lua snippet engine
         'L3MON4D3/LuaSnip',
 
