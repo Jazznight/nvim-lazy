@@ -46,7 +46,12 @@ lazy.setup({
       'aserowy/tmux.nvim',
       lazy = true,
       config = function()
-        require('tmux').setup{}
+        require('tmux').setup{
+          resize = {
+            -- enables default keybindings (A-hjkl) for normal mode
+            enable_default_keybindings = false
+          }
+        }
       end
     },
 

@@ -1,14 +1,6 @@
 -- Enable Comment.nvim
 require('Comment').setup()
 
--- Enable Comment.nvim
-require('tmux').setup {
-  resize = {
-    -- enables default keybindings (A-hjkl) for normal mode
-    enable_default_keybindings = false
-  }
-}
-
 -- Enable `lukas-reineke/indent-blankline.nvim`
 -- See `:help indent_blankline.txt`
 require('indent_blankline').setup {
