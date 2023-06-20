@@ -32,7 +32,6 @@ end
 
 -- Start setup
 lazy.setup({
-  spec = {
     -- Colorscheme:
     -- The colorscheme should be available when starting Neovim.
     {
@@ -47,27 +46,50 @@ lazy.setup({
       lazy = true,
     },
 
+    -- "gc" to comment visual regions/lines
+    { 'numToStr/Comment.nvim', config={} },
+
     -- tmux
     {
       'aserowy/tmux.nvim',
-      lazy = true,
-      config = function()
-        require('tmux').setup{
-          resize = {
-            -- enables default keybindings (A-hjkl) for normal mode
-            enable_default_keybindings = false
-          }
-        }
-      end
+      event = "BufReadPre",
+      opts = {
+      	resize = {
+      	  enable_default_keybindings = false,
+      	},
+      },
+
     },
 
-    -- Icons
-    { 'kyazdani42/nvim-web-devicons', lazy = true },
-
-    -- Dashboard (start screen)
+    -- Indent line
     {
-      'goolord/alpha-nvim',
-      dependencies = { 'kyazdani42/nvim-web-devicons' },
+      'lukas-reineke/indent-blankline.nvim',
+      event = "BufReadPre",
+      opts = {
+        char = "▏",
+        use_treesitter = true,
+        show_first_indent_level = true,
+        show_trailing_blankline_indent = false,
+        filetype_exclude = {
+          'lspinfo',
+          'packer',
+          'checkhealth',
+          'help',
+          'man',
+          'dashboard',
+          'git',
+          'markdown',
+          'text',
+          'terminal',
+          'NvimTree',
+        },
+        buftype_exclude = {
+          'terminal',
+          'nofile',
+          'quickfix',
+          'prompt',
+        },
+      },
     },
 
     -- Git labels
@@ -78,9 +100,24 @@ lazy.setup({
         'nvim-lua/plenary.nvim',
         'kyazdani42/nvim-web-devicons',
       },
-      config = function()
-        require('gitsigns').setup{}
-      end
+      opts = {
+        signs = {
+          add = { text = '+' },
+          change = { text = '~' },
+          delete = { text = '_' },
+          topdelete = { text = '‾' },
+          changedelete = { text = '~' },
+        }
+      }
+    },
+
+    -- Icons
+    { 'kyazdani42/nvim-web-devicons', lazy = true },
+
+    -- Dashboard (start screen)
+    {
+      'goolord/alpha-nvim',
+      dependencies = { 'kyazdani42/nvim-web-devicons' },
     },
 
     -- File explorer
@@ -108,9 +145,6 @@ lazy.setup({
         'nvim-treesitter/nvim-treesitter',
       },
     },
-
-    -- Indent line
-    { 'lukas-reineke/indent-blankline.nvim' },
 
     -- Tag viewer
     { 'preservim/tagbar' },
@@ -178,24 +212,20 @@ lazy.setup({
       tag = "0.1.1",
       lazy = true,
       dependencies = {
-          "nvim-lua/plenary.nvim",
-          {
-              -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
-              "nvim-telescope/telescope-fzf-native.nvim",
-              build = "make",
-              config = function() require("telescope").load_extension("fzf") end,
-          },
-          "kyazdani42/nvim-web-devicons",
+        "nvim-lua/plenary.nvim",
+        {
+          -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
+          "nvim-telescope/telescope-fzf-native.nvim",
+          build = "make",
+          config = function() require("telescope").load_extension("fzf") end,
+        },
+        "kyazdani42/nvim-web-devicons",
       },
     },
-
-    -- "gc" to comment visual regions/lines
-    { 'numToStr/Comment.nvim' },
 
     -- Detect tabstop and shiftwidth automatically
     { 'tpope/vim-sleuth' },
 
     -- Github copilot
     { 'github/copilot.vim' }
-  },
 })
