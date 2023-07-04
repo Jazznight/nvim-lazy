@@ -53,11 +53,7 @@ lazy.setup({
     {
       'aserowy/tmux.nvim',
       event = "BufReadPre",
-      opts = {
-      	resize = {
-      	  enable_default_keybindings = false,
-      	},
-      },
+      opts = {},
 
     },
 
