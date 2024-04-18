@@ -61,29 +61,31 @@ lazy.setup({
     {
       'lukas-reineke/indent-blankline.nvim',
       event = "BufReadPre",
+      main="ibl",
       opts = {
-        char = "▏",
-        use_treesitter = true,
-        show_first_indent_level = true,
-        show_trailing_blankline_indent = false,
-        filetype_exclude = {
-          'lspinfo',
-          'packer',
-          'checkhealth',
-          'help',
-          'man',
-          'dashboard',
-          'git',
-          'markdown',
-          'text',
-          'terminal',
-          'NvimTree',
+        indent = {
+         char = "▏",
         },
-        buftype_exclude = {
-          'terminal',
-          'nofile',
-          'quickfix',
-          'prompt',
+        exclude = {
+          filetypes = {
+            'lspinfo',
+            'packer',
+            'checkhealth',
+            'help',
+            'man',
+            'dashboard',
+            'git',
+            'markdown',
+            'text',
+            'terminal',
+            'NvimTree',
+          },
+          buftypes = {
+            'terminal',
+            'nofile',
+            'quickfix',
+            'prompt',
+          },
         },
       },
     },
@@ -167,12 +169,15 @@ lazy.setup({
         'williamboman/mason.nvim',
         'williamboman/mason-lspconfig.nvim',
 
-        -- Useful status updates for LSP
-        'j-hui/fidget.nvim',
-
         -- Additional lua configuration, makes nvim stuff amazing
         'folke/neodev.nvim',
       }
+    },
+
+    {
+        -- Useful status updates for LSP
+        'j-hui/fidget.nvim',
+        tag = "legacy",
     },
 
     -- Autocomplete
@@ -186,9 +191,6 @@ lazy.setup({
         -- For styling
         'onsails/lspkind.nvim',
 
-        -- Lua snippet engine
-        'L3MON4D3/LuaSnip',
-
         -- different completion source
         'hrsh7th/cmp-nvim-lsp',
         'hrsh7th/cmp-path',
@@ -200,6 +202,15 @@ lazy.setup({
         'hrsh7th/vim-vsnip',
         'hrsh7th/cmp-vsnip'
       },
+    },
+
+    -- Lua snippet engine
+    {
+      'L3MON4D3/LuaSnip',
+      -- follow latest release.
+	  version = "v2.3",
+	  -- install jsregexp (optional!).
+	  build = "make install_jsregexp"
     },
 
     -- Fuzzy Finder (files, lsp, etc)
@@ -217,6 +228,14 @@ lazy.setup({
         },
         "kyazdani42/nvim-web-devicons",
       },
+    },
+  
+    -- Elixir tools
+    {
+      "elixir-tools/elixir-tools.nvim",
+      version = "*",
+      event = { "BufReadPre", "BufNewFile" },
+      dependencies = { "nvim-lua/plenary.nvim", },
     },
 
     -- Detect tabstop and shiftwidth automatically

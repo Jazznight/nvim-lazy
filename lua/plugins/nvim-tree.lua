@@ -61,28 +61,16 @@ nvim_tree.setup {
   respect_buf_cwd = false,
   --on_attach = "disable",
   on_attach = on_attach,
-  remove_keymaps = false,
   select_prompts = false,
   view = {
     adaptive_size = false,
     centralize_selection = false,
     width = 32,
-    hide_root_folder = false,
     side = "left",
     preserve_window_proportions = false,
     number = false,
     relativenumber = false,
     signcolumn = "yes",
-    mappings = {
-      custom_only = false,
-      list = {
-        -- user mappings go here
-        -- { key = { "<CR>", "o", "<2-LeftMouse>" }, action = "edit_no_picker" },
-        -- { key = "u", action = "dir_up" },
-        -- { key = "s", action = "vsplit" },
-        -- { key = "i", action = "split_no_picker" },
-      },
-    },
     float = {
       enable = false,
       quit_on_focus_loss = true,
@@ -97,6 +85,7 @@ nvim_tree.setup {
     },
   },
   renderer = {
+    root_folder_label = true,
     add_trailing = false,
     group_empty = false,
     highlight_git = false,
