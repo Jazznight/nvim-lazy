@@ -54,7 +54,7 @@ local servers = {
   -- pyright = {},
   rust_analyzer = {},
   jedi_language_server = {},
-  tsserver = {},
+  -- tsserver = {},
 
   lua_ls = {
     Lua = {
@@ -78,23 +78,15 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 -- Setup mason so it can manage external tooling
 require('mason').setup()
-
--- Ensure the servers above are installed
-local mason_lspconfig = require 'mason-lspconfig'
-
-mason_lspconfig.setup {
+require('mason-lspconfig').setup({
   ensure_installed = vim.tbl_keys(servers),
-}
+  -- optional: automatic_enable = false,
+})
 
-mason_lspconfig.setup_handlers {
-  function(server_name)
-    require('lspconfig')[server_name].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      settings = servers[server_name],
-    }
-  end,
-}
+for name, cfg in pairs(servers) do
+  require('lspconfig')[name].setup(vim.tbl_extend('keep', {
+    capabilities = capabilities,
+    on_attach = on_attach,
+  }, cfg))
+end
 
--- Turn on lsp status information
-require('fidget').setup()

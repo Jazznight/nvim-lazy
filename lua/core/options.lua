@@ -12,6 +12,7 @@ local function paste()
   return {vim.fn.split(vim.fn.getreg(''), '\n'), vim.fn.getregtype('')}
 end
 
+g.python3_host_prog = '~/.pyenv/versions/3.9.21/bin/python3.9'
 g.clipboard = {
   name = 'osc52',
   copy = {['+'] = copy, ['*'] = copy},

@@ -47,7 +47,7 @@ lazy.setup({
     },
 
     -- "gc" to comment visual regions/lines
-    { 'numToStr/Comment.nvim', config={} },
+    { 'numToStr/Comment.nvim', ops={} },
 
     -- tmux
     {
@@ -126,11 +126,11 @@ lazy.setup({
 
     -- Statusline
     {
-      'freddiehaddad/feline.nvim',
-      dependencies = {
-        'kyazdani42/nvim-web-devicons',
-        'lewis6991/gitsigns.nvim',
-      },
+      'nvim-lualine/lualine.nvim',
+      dependencies = { 'nvim-tree/nvim-web-devicons' },
+      config = function()
+        require('core.statusline')
+      end,
     },
 
     -- Treesitter
@@ -199,8 +199,32 @@ lazy.setup({
         'saadparwaiz1/cmp_luasnip',
 
         -- Others snippet engine in vscode format
-        'hrsh7th/vim-vsnip',
-        'hrsh7th/cmp-vsnip'
+        --'hrsh7th/vim-vsnip',
+        --'hrsh7th/cmp-vsnip'
+      },
+    },
+
+    -- for codeium
+    {
+      'saghen/blink.cmp',
+      dependencies = {
+        {
+          'Exafunction/codeium.nvim',
+        },
+      },
+      opts = {
+        fuzzy = { 
+          implementation = "prefer_rust_with_warning",
+          prebuilt_binaries = {
+            force_version = "v1.4.1"
+          }
+        },
+        sources = {
+          default = { 'lsp', 'path', 'snippets', 'buffer', 'codeium' },
+          providers = {
+            codeium = { name = 'Codeium', module = 'codeium.blink', async = true },
+          },
+        },
       },
     },
 
@@ -216,7 +240,7 @@ lazy.setup({
     -- Fuzzy Finder (files, lsp, etc)
     {
       "nvim-telescope/telescope.nvim",
-      tag = "0.1.1",
+      tag = "0.1.8",
       lazy = true,
       dependencies = {
         "nvim-lua/plenary.nvim",
@@ -241,6 +265,55 @@ lazy.setup({
     -- Detect tabstop and shiftwidth automatically
     { 'tpope/vim-sleuth' },
 
-    -- Github copilot
-    { 'github/copilot.vim' }
+    -- Windsurf and codeium
+    {
+      "Exafunction/windsurf.nvim",
+      dependencies = {
+        "nvim-lua/plenary.nvim",
+        "hrsh7th/nvim-cmp",
+      },
+      config = function()
+        require('codeium.virtual_text').set_statusbar_refresh(function()
+          require('lualine').refresh()
+        end)
+        require("codeium").setup({
+          -- 啟用 virtual text 功能
+          virtual_text = {
+            enabled = true,
+            manual = false,  -- 設為 true 可以手動觸發
+            filetypes = {},  -- 可以指定特定文件類型
+            default_filetype_enabled = true,
+            idle_delay = 75,
+            virtual_text_priority = 65535,
+            map_keys = true,  -- 禁用默認按鍵映射，由 nvim-cmp 統一處理
+            key_bindings = {
+              accept = "<C-l>",       -- 啟用 Tab 映射
+              accept_word = false,    -- 接受下一個詞
+              accept_line = false,    -- 接受下一行
+              clear = "<C-x>",        -- 清除 virtual text
+              next = "<M-]>",         -- 下一個建議
+              prev = "<M-[>",         -- 上一個建議
+            }
+          }
+        })
+      end
+    },
+
+    -- ClaudeCode
+    {
+      "coder/claudecode.nvim",
+      dependencies = { "folke/snacks.nvim" },
+      config = true,
+      keys = {
+        { "<leader>ac", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },
+        { "<leader>af", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },
+        { "<leader>ar", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" },
+        { "<leader>aC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
+        { "<leader>am", "<cmd>ClaudeCodeSelectModel<cr>", desc = "Select Claude model" },
+        { "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>", desc = "Add current buffer" },
+        { "<leader>as", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send to Claude" },
+        { "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
+        { "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
+      },
+    }
 })

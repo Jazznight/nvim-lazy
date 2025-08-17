@@ -1,5 +1,3 @@
-
-
 local status_ok, cmp = pcall(require, 'cmp')
 if not status_ok then
   return
@@ -19,27 +17,6 @@ local border_opts = {
   border = "single",
   winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
 }
-local lspkind_mode = {
-  mode = "symbol",
-  symbol_map = {
-    Array = "󰅪",
-    Boolean = "⊨",
-    Class = "󰌗",
-    Constructor = "",
-    Key = "󰌆",
-    Namespace = "󰅪",
-    Null = "NULL",
-    Number = "#",
-    Object = "󰀚",
-    Package = "󰏗",
-    Property = "",
-    Reference = "",
-    Snippet = "",
-    String = "󰀬",
-    TypeParameter = "󰊄",
-    Unit = "",
-  }
-}
 
 cmp.setup {
   snippet = {
@@ -48,7 +25,7 @@ cmp.setup {
     end,
   },
   completion = {
-    --completeopt = 'menu,menuone,noselect'
+    autocomplete = { require("cmp.types").cmp.TriggerEvent.TextChanged },
     keyword_length = 2
   },
   window = {
@@ -57,7 +34,14 @@ cmp.setup {
   },
   formatting = {
     fields = { "kind", "abbr", "menu" },
-    format = lspkind_status_ok and lspkind.cmp_format(lspkind_mode) or nil,
+    format = require('lspkind').cmp_format({
+      mode = "symbol",
+      maxwidth = 50,
+      ellipsis_char = '...',
+      symbol_map = { 
+        Codeium = "🤖",  -- Windsurf 的圖標
+      }
+    })
   },
   mapping = {
     ['<C-n>'] = cmp.mapping.select_next_item(),
@@ -70,15 +54,20 @@ cmp.setup {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
+
+    -- 使用表達式映射讓 Windsurf 優先
     ['<Tab>'] = function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
+        --cmp.confirm({ select = true })  -- ✅ 核心修改在這
       elseif luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
       else
-        fallback()
+        --cmp.complete()
+        fallback()  -- ✅ 回到預設 Tab 行為
       end
     end,
+
     ['<S-Tab>'] = function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
@@ -89,10 +78,11 @@ cmp.setup {
       end
     end,
   },
-  sources = {
+  sources = cmp.config.sources({
     { name = 'nvim_lsp' },
+    { name = 'codeium' },  -- Windsurf 的 cmp 來源
     { name = 'luasnip' },
-    { name = 'vsnip' },
+  }, {
     { name = 'buffer' }
-  },
+  }),
 }

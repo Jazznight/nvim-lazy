@@ -85,7 +85,7 @@ nvim_tree.setup {
     },
   },
   renderer = {
-    root_folder_label = true,
+    root_folder_label = ":t",
     add_trailing = false,
     group_empty = false,
     highlight_git = false,
@@ -93,7 +93,7 @@ nvim_tree.setup {
     highlight_opened_files = "none",
     indent_width = 2,
     indent_markers = {
-      enable = false,
+      enable = true,
       inline_arrows = true,
       icons = {
         corner = "└",
@@ -117,7 +117,7 @@ nvim_tree.setup {
       glyphs = {
         default = "",
         symlink = "",
-        bookmark = "",
+        bookmark = "",
         folder = {
           arrow_closed = "",
           arrow_open = "",

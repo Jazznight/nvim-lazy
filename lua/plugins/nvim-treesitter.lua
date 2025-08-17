@@ -13,6 +13,7 @@ treesitter.setup {
   ignore_install = { "help" },
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
+  auto_install = true,
 
   highlight = { enable = true },
   indent = { enable = true, disable = { 'python' } },
@@ -62,10 +63,10 @@ treesitter.setup {
     swap = {
       enable = true,
       swap_next = {
-        ['<leader>a'] = '@parameter.inner',
+        ['<leader>pa'] = '@parameter.inner',
       },
       swap_previous = {
-        ['<leader>A'] = '@parameter.inner',
+        ['<leader>pA'] = '@parameter.inner',
       },
     },
   },
