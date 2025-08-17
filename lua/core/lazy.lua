@@ -134,13 +134,11 @@ lazy.setup({
     },
 
     -- Treesitter
-    { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
-
-    -- Additional text objects via treesitter
     {
-      'nvim-treesitter/nvim-treesitter-textobjects',
+      'nvim-treesitter/nvim-treesitter',
+      build = ':TSUpdate',
       dependencies = {
-        'nvim-treesitter/nvim-treesitter',
+        'nvim-treesitter/nvim-treesitter-textobjects',
       },
     },
 

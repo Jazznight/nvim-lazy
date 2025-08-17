@@ -9,14 +9,37 @@ end
 -- See `:help nvim-treesitter`
 treesitter.setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'comment', 'c', 'awk', 'lua', 'python', 'rust', 'eex', 'elixir', 'erlang', 'css', 'html', 'javascript', 'typescript', 'json', 'yaml', 'help' },
-  ignore_install = { "help" },
+  ensure_installed = {
+    'c',
+    'awk',
+    'lua',
+    'python',
+    'rust',
+    'heex',
+    'elixir',
+    'erlang',
+    'css',
+    'html',
+    'javascript',
+    'typescript',
+    'json',
+    'yaml',
+    'vim',
+    'vimdoc',
+  },
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
   auto_install = true,
+  ignore_install = {},
+  modules = {},
 
-  highlight = { enable = true },
-  indent = { enable = true, disable = { 'python' } },
+  highlight = {
+    enable = true,
+  },
+  indent = {
+    enable = true,
+    disable = { 'python' },
+  },
   incremental_selection = {
     enable = true,
     keymaps = {
