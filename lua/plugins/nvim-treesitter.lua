@@ -61,6 +61,8 @@ treesitter.setup {
         ['if'] = '@function.inner',
         ['ac'] = '@class.outer',
         ['ic'] = '@class.inner',
+        ["am"] = "@module.outer",
+        ["im"] = "@module.inner",
       },
     },
     move = {
